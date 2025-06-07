@@ -1,0 +1,12 @@
+[project]
+name = "install-uv-in-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.12",
+    "openai-agents>=0.0.16",
+    "python-dotenv>=1.1.0",
+    "streamlit>=1.45.1",
+]
