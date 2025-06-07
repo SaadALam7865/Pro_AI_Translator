@@ -1,3 +1,19 @@
+# Environment files
 .env
-.venv
-__pycache__
+.venv/
+venv/
+env/
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Logs
+*.log
+
+# Streamlit specific
+.streamlit/
+.streamlit/secrets.toml
+
+# System files
+.DS_Store
