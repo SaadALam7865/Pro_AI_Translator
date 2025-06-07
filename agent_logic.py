@@ -1,23 +1,17 @@
-import os
+import streamlit as st
 import httpx
 import logging
-from dotenv import load_dotenv
 from typing import List
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-if not GEMINI_API_KEY:
-    logger.error("GEMINI_API_KEY is missing in .env file.")
-    raise ValueError("GEMINI_API_KEY is missing in .env file.")
+# Load Gemini API Key from Streamlit secrets
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
 # Gemini API endpoint
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY"
+GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 
 # Supported languages
 SUPPORTED_LANGUAGES = ["Arabic", "Spanish", "French", "Urdu", "Chinese (Simplified)", "German"]
@@ -49,7 +43,7 @@ async def translate_text(input_text: str, target_language: str) -> str:
         try:
             logger.info("Sending request to Gemini API")
             response = await client.post(GEMINI_API_URL, params=params, json=payload)
-            response.raise_for_status()  # Raises for 4xx/5xx errors
+            response.raise_for_status()
 
             data = response.json()
             logger.info("Received response from Gemini API")
